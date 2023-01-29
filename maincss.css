@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;1,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
+
+body{
+    background-color: darkslategray;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    align-items: center;
+}
+#result{
+    position: relative;
+    text-align: center;
+    top: -6%;
+    color: black;
+
+}
+.button {
+    position: relative;
+    top: 10%;
+    width: 17%;
+    height: 55px;
+    border: 1px solid #278127;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 2rem;
+    font-family: inherit;
+    display: block;
+}
+.button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    transition: all 5.s;
+    background-color: rgb(11, 155, 11);
+    color: white
+}
+input{
+    position: relative;
+    top: 10%;
+}
+#nameask1 {
+    color: black;
+    text-align: center;
+}
+.fade-out {
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+.fade-in {
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+  
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+  h1 {
+    position: relative;
+    top: 4%;
+    text-align: center;
+    color: black;
+  }
+a:link, a:visited{
+    text-decoration: none;
+    text-align: center;
+    font-family: inherit;
+    color: black;
+}
+a:hover, a:active{
+    text-decoration: none;
+    text-align: center;
+    font-family: inherit;
+    color: white;
+}
+input {
+    border: 2px solid gray;
+    border-radius: 4px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    width: 300px;
+    text-align: center;
+  }
+input:hover {
+    transition: 0.4s;
+    border: 2px solid rgb(76, 192, 76);
+    border-radius: 4px;
+    padding: 12px 20px;
+    margin: 8px 0;
+  }
+  .quiz-container{
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10 2px rgba(100, 100, 100, 0.1);
+    width: 800px;
+    height: 800px;
+    overflow:hidden
+  }
+.rdbtt.button:hover{
+    background-color: red;
+}
+#warning{
+    font-size: 200%;
+}

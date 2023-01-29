@@ -1,0 +1,210 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="maincss.css">
+    <title>Logic Quiz</title>
+    <script>
+      
+
+      <!--Questions-->
+      var questions = [
+        {s: "Quiz 1", q: "1. M -> N <br> 2. M -> O / M -> (N ^ O)", a:"~M v N 1 Impl"},
+        {s: "Quiz 1", q: "1. M -> N <br> 2. M -> O / M -> (N ^ O) <br> 3. ~M v N 1 Impl", a:"~M v O 2 Impl"},
+        {s: "Quiz 1", q: "1. M -> N <br> 2. M -> O / M -> (N ^ O) <br> 3. ~M v N 1 Impl <br> 4. ~M v O 2 Impl", a:"(~M v N) ^ (~M v O) 3,4 Conj"},
+        {s: "Quiz 1", q: "1. M -> N <br> 2. M -> O / M -> (N ^ O) <br> 3. ~M v N 1 Impl <br> 4. ~M v O 2 Impl <br> 5. (~M v N) ^ (~M v O) 3,4 Conj", a:"~M v (N ^ O) 5 Dist"},
+        {s: "Quiz 1", q: "1. M -> N <br> 2. M -> O / M -> (N ^ O) <br> 3. ~M v N 1 Impl <br> 4. ~M v O 2 Impl <br> 5. (~M v N) ^ (~M v O) 3,4 Conj <br> 6. ~M v (N ^ O) 5 Dist", a:"M -> (N ^ O) 6 Impl"},
+        
+        {s: "Quiz 2", q: "1.~A      / A -> B", a:"~A v B 2 Add"},
+        {s: "Quiz 2", q: "1.~A      / A -> B <br> 2. ~A v B      2 Add", a:"A -> B 2 Impl"},
+
+        {s: "Quiz 3", q: "1. ~(U ^ W) -> X <br> 2. U -> ~U / ~(U v ~X)", a:"~U v ~U 2 Impl"},
+        {s: "Quiz 3", q: "1. ~(U ^ W) -> X <br> 2. U -> ~U / ~(U v ~X) <br> 3. ~U v ~U      2 Impl", a:"~U v ~W 4 Add"},
+        {s: "Quiz 3", q: "1. ~(U ^ W) -> X <br> 2. U -> ~U / ~(U v ~X) <br> 3. ~U v ~U      2 Impl  <br> 4. ~U           3 Taut  <br> 5. ~U v ~W      4 Add", a:"~(U ^ W) 5 DM"},
+        {s: "Quiz 3", q: " 1. ~(U ^ W) -> X <br> 2. U -> ~U / ~(U v ~X) <br> 3. ~U v ~U      2 Impl  <br> 4. ~U           3 Taut  <br> 5. ~U v ~W      4 Add    <br> 6. ~(U ^ W)     5 DM", a:"X 1,6 MP"},
+        {s: "Quiz 3", q: "1. ~(U ^ W) -> X <br> 2. U -> ~U / ~(U v ~X) <br> 3. ~U v ~U      2 Impl  <br> 4. ~U           3 Taut  <br> 5. ~U v ~W      4 Add    <br> 6. ~(U ^ W)     5 DM    <br> 7. X            1,6 MP", a:"~U ^ X 4,7 Conj"},
+        {s: "Quiz 3", q: "1. ~(U ^ W) -> X <br> 2. U -> ~U / ~(U v ~X) <br> 3. ~U v ~U      2 Impl  <br> 4. ~U           3 Taut  <br> 5. ~U v ~W      4 Add    <br> 6. ~(U ^ W)     5 DM    <br> 7. X            1,6 MP      <br> 8. ~U ^ X       4,7 Conj", a:"~U ^ ~~X 8 DN"},
+        {s: "Quiz 3", q: "1. ~(U ^ W) -> X <br> 2. U -> ~U / ~(U v ~X) <br> 3. ~U v ~U      2 Impl  <br> 4. ~U           3 Taut  <br> 5. ~U v ~W      4 Add    <br> 6. ~(U ^ W)     5 DM    <br> 7. X            1,6 MP      <br> 8. ~U ^ X       4,7 Conj    <br> 9. ~U ^ ~~X     8 DN", a:"~(U v ~X) 9 DM"},
+
+        {s: "Quiz 4", q:"1. T -> R <br> 2. T -> ~R       / ~T" , a:"~~R -> ~T 2 Trans"},
+        {s: "Quiz 4", q:"1. T -> R <br> 2. T -> ~R       / ~T     <br> 3. ~~R -> ~T      2 Trans" , a:"R -> ~T 3 DN"},
+        {s: "Quiz 4", q:"1. T -> R <br> 2. T -> ~R       / ~T     <br> 3. ~~R -> ~T      2 Trans  <br> 4. R -> ~T        3 DN" , a:"T -> ~T 1,4 HS"},
+        {s: "Quiz 4", q:"1. T -> R <br> 2. T -> ~R       / ~T     <br> 3. ~~R -> ~T      2 Trans  <br> 4. R -> ~T        3 DN    <br> 5. T -> ~T        1,4 HS" , a:"~T v ~T 5 Impl"},
+        {s: "Quiz 4", q:"1. T -> R <br> 2. T -> ~R       / ~T     <br> 3. ~~R -> ~T      2 Trans  <br> 4. R -> ~T        3 DN    <br> 5. T -> ~T        1,4 HS  <br> 6. ~T v ~T        5 Impl" , a:"~T 6 Taut"},
+
+
+      {
+        s: "Quiz 5",
+         q: " 1. M -> (U -> H)  <br> 2. (H v ~U) -> F      / M -> F",
+         a: "(~U v H) -> F 2 Com"
+      },
+      {
+        s: "Quiz 5",
+         q: " 1. M -> (U -> H)  <br> 2. (H v ~U) -> F      / M -> F   <br> 3. (~U v H) -> F      2 Com",
+         a: "(U -> H) -> F 3 Impl"
+      },
+      {
+        s: "Quiz 5",
+         q: " 1. M -> (U -> H)  <br> 2. (H v ~U) -> F      / M -> F   <br> 3. (~U v H) -> F      2 Com   <br> 4. (U -> H) -> F      3 Impl",
+         a: "(M -> F) 1,4 HS"
+      },
+
+      {
+        s: "Quiz 6",
+        q: " 1. ~R v P  <br> 2. R v ~P  / R ≡ P",
+        a: "R -> P 1 Impl"
+    },
+    {
+      s: "Quiz 6",
+        q: " 1. ~R v P  <br> 2. R v ~P  / R ≡ P  <br> 3. R -> P                     1 Impl",
+        a: "~P v R 2 Com"
+    },
+    {
+      s: "Quiz 6",
+        q: " 1. ~R v P  <br> 2. R v ~P  / R ≡ P  <br> 3. R -> P                     1 Impl  <br> 4. ~P v R                     2 Com",
+        a: "P -> R 4 Impl"
+    },
+    {
+      s: "Quiz 6",
+        q: " 1. ~R v P  <br> 2. R v ~P  / R ≡ P  <br> 3. R -> P                     1 Impl  <br> 4. ~P v R                     2 Com  <br> 5. P -> R                     4 Impl",
+        a: "(R -> P) ^ (P -> R) 3,5 Conj"
+    },
+    {
+      s: "Quiz 6",
+        q: " 1. ~R v P  <br> 2. R v ~P  / R ≡ P  <br> 3. R -> P                     1 Impl  <br> 4. ~P v R                     2 Com  <br> 5. P -> R                     4 Impl  <br> 6. (R -> P) ^ (P -> R)        3,5 Conj",
+        a: "R ≡ P 6 Equiv"
+    },
+
+    {
+      s: "Quiz 7",
+        q: " 1. A -> B / A -> (B v C)",
+        a: "~A v B 1 Impl"
+    },
+    {
+      s: "Quiz 7",
+        q: " 1. A -> B / A -> (B v C) <br> 2.~A v B              1 Impl",
+        a: "(~A v B) v C 2 Add"
+    },
+    {
+      s: "Quiz 7",
+        q: " 1. A -> B / A -> (B v C) <br> 2.~A v B              1 Impl <br> 3. (~A v B) v C       2 Add",
+        a: "~A v (B v C) 3 Assoc"
+    },
+    {
+      s: "Quiz 7",
+        q: " 1. A -> B / A -> (B v C) <br> 2.~A v B              1 Impl <br> 3. (~A v B) v C       2 Add <br> 4. ~A v (B v C)       3 Assoc ",
+        a: "A -> (B v C) 4 Impl"
+    },
+
+    {
+      s: "Quiz 8",
+        q: " 1. Q -> (W ^ D) / Q -> W",
+        a: "~Q v (W ^ D) 1 Impl"
+    },
+    {
+      s: "Quiz 8",
+        q: " 1. Q -> (W ^ D) / Q -> W <br> 2. ~Q v (W ^ D)               1 Impl",
+        a: "(~Q v W) ^ (~Q v D) 2 Dist"
+    },
+    {
+      s: "Quiz 8",
+        q: " 1. Q -> (W ^ D) / Q -> W <br> 2. ~Q v (W ^ D)               1 Impl <br> 3. (~Q v W) ^ (~Q v D)        2 Dist",
+        a: "~Q v W 3 Simp"
+    },
+    {
+      s: "Quiz 8",
+        q: " 1. Q -> (W ^ D) / Q -> W <br> 2. ~Q v (W ^ D)               1 Impl <br> 3. (~Q v W) ^ (~Q v D)        2 Dist <br> 4. ~Q v W                     3 Simp",
+        a: "Q -> W 4 Impl"
+    },
+
+    {
+      s: "Quiz 9",
+        q: " 1. T / S -> T",
+        a:  "T v ~S 1 Add"
+    },
+    {
+      s: "Quiz 9",
+        q: " 1. T / S -> T <br> 2. T v ~S        1 Add",
+        a: "~S v T 2 Com"
+    },
+    {
+      s: "Quiz 9",
+        q: " 1. T / S -> T <br> 2. T v ~S        1 Add <br> 3. ~S v T        2 Com",
+        a: "S -> T 3 Impl" 
+    },
+
+    {
+      s: "Quiz 10",
+        q: " 1. (W ^ C) -> ~S <br> 2. W / C -> ~S",
+        a:  "W -> (C -> ~S) 1 Exp"
+    },
+    {
+      s: "Quiz 10",
+        q: " 1. (W ^ C) -> ~S <br> 2. W / C -> ~S <br> 3. W -> (C -> ~S)       1 Exp",
+        a: "C -> ~S 2,3 MP"
+    }
+
+
+    ];
+      var score = 0;
+      var currentQuestion = 0;
+      function changeHeader() {
+        if (document.getElementById("answer").value == questions[currentQuestion].a) {
+
+    document.getElementById("result").innerHTML = "Correct!";
+    score += 1;
+
+      } else {
+
+    document.getElementById("result").innerHTML = "Incorrect. The correct answer is: "+ questions[currentQuestion].a;
+      }
+
+    currentQuestion++;
+
+        if(currentQuestion < questions.length) {
+      document.getElementById("warning").innerHTML = questions[currentQuestion].s;
+      document.getElementById("question").innerHTML = questions[currentQuestion].q;
+      document.getElementById("answer").value = "";
+        } else {
+      document.getElementById("bt").style.visibility = "hidden";
+      document.getElementById("question").innerHTML = "Quiz complete! Your score is: " + score;
+      document.getElementById("result").style.visibility = "hidden";
+      document.getElementById("warning").style.visibility = "hidden";
+      document.getElementById("answer").style.visibility = "hidden";
+  }
+        if (currentQuestion == 5){
+          if (document.getElementById("answer").value == questions2[currentQuestion].a) {
+
+document.getElementById("result").innerHTML = "Correct! +1 Score!";
+
+  } else {
+
+document.getElementById("result").innerHTML = "Incorrect. The correct answer is: "+ questions2[currentQuestion].a;
+  }
+        }
+}
+for(var i=0; i<questions.length; i++) {
+    if (i==5) {
+        document.getElementById("question") = "Reached 5th Question"
+    }
+}
+
+document.getElementById("question").innerHTML = questions2[currentQuestion].q;
+    </script>
+  </head>
+  <body>
+    <div class="fade-in">
+      <center>
+        <br>
+        <br>
+        <div class="quiz-container">
+          <h2 id="warning">Quiz 1</h2>
+    <h1 id="question"> 1. M -> N <br> 2. M -> O / M -> (N ^ O) </h1>
+    <br>
+    <input id="answer" class="input" placeholder="Enter your answer here...">
+    <h2 id="result"></h2>
+    <button id="bt" class="button button1"onclick="changeHeader()">SUBMIT</button> 
+    <button id="rdbt" class="button button1"><a href="front.html">RESET</a></button>
+  </div>
+  </center>
+  </div>
+  </body>
+</html>
